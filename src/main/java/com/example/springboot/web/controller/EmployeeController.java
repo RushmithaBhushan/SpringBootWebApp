@@ -1,6 +1,7 @@
 package com.example.springboot.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +18,19 @@ public class EmployeeController {
 	
 	@Autowired 
 	private EmployeeService employeeService;
+	
+	
+	@Autowired
+    private Environment env;
+	
+	@Autowired
+	private Sample sample;
  
 	@GetMapping("/")
 	public String indexpage(Model model) {
 		model.addAttribute("listEmployees", employeeService.getAllEmployee());
+		System.out.println(env.getProperty("spring.datasource.password"));
+		System.out.println(sample.dbUsername);
 		return "index";
 	}
 	
@@ -50,4 +60,6 @@ public class EmployeeController {
 		this.employeeService.deleteEmployeeById(id);
 		return "redirect:/";
 	}
+	
+
 }
